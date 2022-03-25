@@ -46,6 +46,7 @@ export interface TooltipAdapter<P = Record<string, any>, S = Record<string, any>
         click: string;
         focus: string;
         blur: string;
+        keydown: string;
     };
     registerTriggerEvent(...args: any[]): void;
     getTriggerBounding(...args: any[]): DOMRect;
@@ -61,6 +62,14 @@ export interface TooltipAdapter<P = Record<string, any>, S = Record<string, any>
     updateContainerPosition(): void;
     updatePlacementAttr(placement: Position): void;
     getContainerPosition(): string;
+    registerContainerKeydown(node: any): void;
+    unregisterContainerKeydown(): void;
+    getFocusableElements(node: any): any[];
+    getActiveElement(): any;
+    getContainer(): any;
+    setInitialFocus(): void;
+    notifyEscKeydown(event: any): void;
+    getTriggerNode(): any;
 }
 
 export type Position = ArrayElement<typeof strings.POSITION_SET>;
@@ -104,6 +113,7 @@ export default class Tooltip<P = Record<string, any>, S = Record<string, any>> e
         this._unBindPortalEvent();
         this._unBindResizeEvent();
         this._unBindScrollEvent();
+        this._unBindContainerKeydown();
     }
 
     _bindTriggerEvent(triggerEventSet: Record<string, any>) {
@@ -154,7 +164,12 @@ export default class Tooltip<P = Record<string, any>, S = Record<string, any>> e
 
     _generateEvent(types: ArrayElement<typeof strings.TRIGGER_SET>) {
         const eventNames = this._adapter.getEventName();
-        const triggerEventSet = {};
+        const triggerEventSet = {
+            // bind esc keydown on trigger for a11y
+            [eventNames.keydown]: (event) => {
+                this._handleTriggerKeydown(event);
+            },
+        };
         let portalEventSet = {};
         switch (types) {
             case 'focus':
@@ -185,6 +200,13 @@ export default class Tooltip<P = Record<string, any>, S = Record<string, any>> e
                     // console.log(e);
                     this.delayHide();
                     // this.hide('trigger');
+                };
+                // bind focus to hover trigger for a11y
+                triggerEventSet[eventNames.focus] = () => {
+                    this.delayShow();
+                };
+                triggerEventSet[eventNames.blur] = () => {
+                    this.delayHide();
                 };
 
                 portalEventSet = { ...triggerEventSet };
@@ -261,6 +283,7 @@ export default class Tooltip<P = Record<string, any>, S = Record<string, any>> e
 
         this._adapter.on('positionUpdated', () => {
             this._togglePortalVisible(true);
+            this._adapter.setInitialFocus();
         });
 
         const position = this.calcPosition(null, null, null, false);
@@ -796,5 +819,103 @@ export default class Tooltip<P = Record<string, any>, S = Record<string, any>> e
 
     _initContainerPosition() {
         this._adapter.updateContainerPosition();
+    }
+
+    registerContainerKeydown(node: any) {
+        this._adapter.registerContainerKeydown(node);
+    }
+
+    _unBindContainerKeydown() {
+        this._adapter.unregisterContainerKeydown();
+    }
+
+    handleContainerKeydown = (event: any) => {
+        const { guardFocus, closeOnEsc } = this.getProps();
+        switch (event && event.key) {
+            case "Escape":
+                closeOnEsc && this._handleEscKeyDown(event);
+                break;
+            case "Tab":
+                if (guardFocus) {
+                    const container = this._adapter.getContainer();
+                    const focusableElements = this._adapter.getFocusableElements(container);
+                    const focusableNum = focusableElements.length;
+    
+                    if (focusableNum) {
+                        if (event.shiftKey) {
+                            this._handleContainerShiftTabKeyDown(focusableElements, event);
+                        } else {
+                            this._handleContainerTabKeyDown(focusableElements, event);
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    _handleTriggerKeydown(event: any) {
+        const { closeOnEsc } = this.getProps();
+        const container = this._adapter.getContainer();
+        const focusableElements = this._adapter.getFocusableElements(container);
+        const focusableNum = focusableElements.length;
+        
+        switch (event && event.key) {
+            case "Escape":
+                closeOnEsc && this._handleEscKeyDown(event);
+                break;
+            case "ArrowUp":
+                focusableNum && this._handleTriggerArrowUpKeydown(focusableElements, event);
+                break;
+            case "ArrowDown":
+                focusableNum && this._handleTriggerArrowDownKeydown(focusableElements, event);
+                break;
+            default:
+                break;
+        }
+    }
+
+    _handleEscKeyDown(event: any) {
+        const { trigger, returnFocusOnClose } = this.getProps();
+        const triggerNode = this._adapter.getTriggerNode();
+        if (trigger !== 'custom') {
+            this.hide();
+
+            const isFocusInTriggerNode = triggerNode && 'focus' in triggerNode;
+            const isTriggerCanFocus = ['hover', 'focus'].includes(trigger);
+            if (isFocusInTriggerNode && !isTriggerCanFocus && returnFocusOnClose) {
+                triggerNode.focus();
+            }
+        }
+        this._adapter.notifyEscKeydown(event);
+    }
+
+    _handleContainerTabKeyDown(focusableElements: any[], event: any) {
+        const activeElement = this._adapter.getActiveElement();
+        const isLastCurrentFocus = focusableElements[focusableElements.length - 1] === activeElement;
+        if (isLastCurrentFocus) {
+            focusableElements[0].focus();
+            event.preventDefault(); // prevent browser default tab move behavior
+        }
+    }
+
+    _handleContainerShiftTabKeyDown(focusableElements: any[], event: any) {
+        const activeElement = this._adapter.getActiveElement();
+        const isFirstCurrentFocus = focusableElements[0] === activeElement;
+        if (isFirstCurrentFocus) {
+            focusableElements[focusableElements.length - 1].focus();
+            event.preventDefault(); // prevent browser default tab move behavior
+        }
+    }
+
+    _handleTriggerArrowDownKeydown(focusableElements: any[], event: any) {
+        focusableElements[0].focus();
+        event.preventDefault(); // prevent browser default scroll behavior
+    }
+
+    _handleTriggerArrowUpKeydown(focusableElements: any[], event: any) {
+        focusableElements[focusableElements.length - 1].focus();
+        event.preventDefault(); // prevent browser default scroll behavior
     }
 }
