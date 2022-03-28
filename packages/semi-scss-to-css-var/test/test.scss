@@ -5,24 +5,24 @@ $semi-margin-sec:var(--semi-margin-sec_cssvar);
   --semi-margin-primary_cssvar:5px;
   --semi-margin-sec_cssvar:15px;
   .sss{
-    margin: 1px 2px 3px $semi-margin-primary + $semi-margin-sec;
+    margin: xxxxx rgba(1,1,1,1) xxx cubic-bezier(calc($a - ( $b + ( $x + $y ) + ( $x + $y) - $c)) $z,1,calc( 1 + $z ),1);
   }
 }
 
-
-
-
-xxxxx xxx $a + $b
-
-xxxxx xxx $a + 1 + $b
-
-xxxxx  xxx  $a + $b + 1 xxxxx  $c + $6
-
-
-xxxxx xxx $a - ($b + ($x + $y)+ $c)
-
-xxxxx xxx  (1 + $a - (1 + $c))
-
+//
+//
+//
+//xxxxx xxx $a + $b
+//
+//xxxxx xxx $a + 1 + $b
+//
+//xxxxx  xxx  $a + $b + 1 xxxxx  $c + $6
+//
+//
+//xxxxx xxx $a - ($b + ($x + $y)+ $c)
+//
+//xxxxx xxx  (1 + $a - (1 + $c))
+//
 
 
 
