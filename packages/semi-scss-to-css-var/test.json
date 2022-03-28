@@ -1,465 +1,89 @@
 bin exec
-/var/folders/kv/sf4rhrc97k72hkbsx6wym_1w0000gn/T/semi_scss_to_css_vars_megv6v/_portal/portal.scss
-var(--semi-margin-primary_cssvar)
-{
-    "nodes": [
-        {
-            "type": "function",
-            "sourceIndex": 0,
-            "value": "var",
-            "before": "",
-            "after": "",
-            "sourceEndIndex": 33,
-            "nodes": [
-                {
-                    "type": "word",
-                    "sourceIndex": 4,
-                    "sourceEndIndex": 32,
-                    "value": "--semi-margin-primary_cssvar"
-                }
-            ]
-        }
-    ]
-}
------
-var(--semi-margin-sec_cssvar)
-{
-    "nodes": [
-        {
-            "type": "function",
-            "sourceIndex": 0,
-            "value": "var",
-            "before": "",
-            "after": "",
-            "sourceEndIndex": 29,
-            "nodes": [
-                {
-                    "type": "word",
-                    "sourceIndex": 4,
-                    "sourceEndIndex": 28,
-                    "value": "--semi-margin-sec_cssvar"
-                }
-            ]
-        }
-    ]
-}
------
-5px
+/var/folders/kv/sf4rhrc97k72hkbsx6wym_1w0000gn/T/semi_scss_to_css_vars_brakpl/_portal/portal.scss
+1 - $a / $b solid red
 {
     "nodes": [
         {
             "type": "word",
             "sourceIndex": 0,
+            "sourceEndIndex": 1,
+            "value": "1"
+        },
+        {
+            "type": "space",
+            "sourceIndex": 1,
+            "sourceEndIndex": 2,
+            "value": " "
+        },
+        {
+            "type": "word",
+            "sourceIndex": 2,
             "sourceEndIndex": 3,
-            "value": "5px"
-        }
-    ]
-}
------
-15px
-{
-    "nodes": [
+            "value": "-"
+        },
         {
-            "type": "word",
-            "sourceIndex": 0,
+            "type": "space",
+            "sourceIndex": 3,
             "sourceEndIndex": 4,
-            "value": "15px"
-        }
-    ]
-}
------
-xxxxx rgba(1,1,1,1) xxx cubic-bezier(calc($a - ( $b + ( $x + $y ) + ( $x + $y) - $c)) $z,1,calc( 1 + $z ),1)
-{
-    "nodes": [
-        {
-            "type": "word",
-            "sourceIndex": 0,
-            "sourceEndIndex": 5,
-            "value": "xxxxx"
+            "value": " "
         },
         {
-            "type": "space",
-            "sourceIndex": 5,
+            "type": "word",
+            "sourceIndex": 4,
             "sourceEndIndex": 6,
-            "value": " "
+            "value": "$a"
         },
         {
-            "type": "function",
+            "type": "div",
             "sourceIndex": 6,
-            "value": "rgba",
-            "before": "",
-            "after": "",
-            "sourceEndIndex": 19,
-            "nodes": [
-                {
-                    "type": "word",
-                    "sourceIndex": 11,
-                    "sourceEndIndex": 12,
-                    "value": "1"
-                },
-                {
-                    "type": "div",
-                    "sourceIndex": 12,
-                    "sourceEndIndex": 13,
-                    "value": ",",
-                    "before": "",
-                    "after": ""
-                },
-                {
-                    "type": "word",
-                    "sourceIndex": 13,
-                    "sourceEndIndex": 14,
-                    "value": "1"
-                },
-                {
-                    "type": "div",
-                    "sourceIndex": 14,
-                    "sourceEndIndex": 15,
-                    "value": ",",
-                    "before": "",
-                    "after": ""
-                },
-                {
-                    "type": "word",
-                    "sourceIndex": 15,
-                    "sourceEndIndex": 16,
-                    "value": "1"
-                },
-                {
-                    "type": "div",
-                    "sourceIndex": 16,
-                    "sourceEndIndex": 17,
-                    "value": ",",
-                    "before": "",
-                    "after": ""
-                },
-                {
-                    "type": "word",
-                    "sourceIndex": 17,
-                    "sourceEndIndex": 18,
-                    "value": "1"
-                }
-            ]
+            "sourceEndIndex": 9,
+            "value": "/",
+            "before": " ",
+            "after": " "
+        },
+        {
+            "type": "word",
+            "sourceIndex": 9,
+            "sourceEndIndex": 11,
+            "value": "$b"
         },
         {
             "type": "space",
-            "sourceIndex": 19,
-            "sourceEndIndex": 20,
+            "sourceIndex": 11,
+            "sourceEndIndex": 12,
             "value": " "
         },
         {
             "type": "word",
-            "sourceIndex": 20,
-            "sourceEndIndex": 23,
-            "value": "xxx"
+            "sourceIndex": 12,
+            "sourceEndIndex": 17,
+            "value": "solid"
         },
         {
             "type": "space",
-            "sourceIndex": 23,
-            "sourceEndIndex": 24,
+            "sourceIndex": 17,
+            "sourceEndIndex": 18,
             "value": " "
         },
         {
-            "type": "function",
-            "sourceIndex": 24,
-            "value": "cubic-bezier",
-            "before": "",
-            "after": "",
-            "sourceEndIndex": 108,
-            "nodes": [
-                {
-                    "type": "function",
-                    "sourceIndex": 37,
-                    "value": "calc",
-                    "before": "",
-                    "after": "",
-                    "sourceEndIndex": 85,
-                    "nodes": [
-                        {
-                            "type": "word",
-                            "sourceIndex": 42,
-                            "sourceEndIndex": 44,
-                            "value": "$a"
-                        },
-                        {
-                            "type": "space",
-                            "sourceIndex": 44,
-                            "sourceEndIndex": 45,
-                            "value": " "
-                        },
-                        {
-                            "type": "word",
-                            "sourceIndex": 45,
-                            "sourceEndIndex": 46,
-                            "value": "-"
-                        },
-                        {
-                            "type": "space",
-                            "sourceIndex": 46,
-                            "sourceEndIndex": 47,
-                            "value": " "
-                        },
-                        {
-                            "type": "function",
-                            "sourceIndex": 47,
-                            "value": "",
-                            "before": " ",
-                            "after": "",
-                            "sourceEndIndex": 84,
-                            "nodes": [
-                                {
-                                    "type": "word",
-                                    "sourceIndex": 49,
-                                    "sourceEndIndex": 51,
-                                    "value": "$b"
-                                },
-                                {
-                                    "type": "space",
-                                    "sourceIndex": 51,
-                                    "sourceEndIndex": 52,
-                                    "value": " "
-                                },
-                                {
-                                    "type": "word",
-                                    "sourceIndex": 52,
-                                    "sourceEndIndex": 53,
-                                    "value": "+"
-                                },
-                                {
-                                    "type": "space",
-                                    "sourceIndex": 53,
-                                    "sourceEndIndex": 54,
-                                    "value": " "
-                                },
-                                {
-                                    "type": "function",
-                                    "sourceIndex": 54,
-                                    "value": "",
-                                    "before": " ",
-                                    "after": " ",
-                                    "sourceEndIndex": 65,
-                                    "nodes": [
-                                        {
-                                            "type": "word",
-                                            "sourceIndex": 56,
-                                            "sourceEndIndex": 58,
-                                            "value": "$x"
-                                        },
-                                        {
-                                            "type": "space",
-                                            "sourceIndex": 58,
-                                            "sourceEndIndex": 59,
-                                            "value": " "
-                                        },
-                                        {
-                                            "type": "word",
-                                            "sourceIndex": 59,
-                                            "sourceEndIndex": 60,
-                                            "value": "+"
-                                        },
-                                        {
-                                            "type": "space",
-                                            "sourceIndex": 60,
-                                            "sourceEndIndex": 61,
-                                            "value": " "
-                                        },
-                                        {
-                                            "type": "word",
-                                            "sourceIndex": 61,
-                                            "sourceEndIndex": 63,
-                                            "value": "$y"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "space",
-                                    "sourceIndex": 65,
-                                    "sourceEndIndex": 66,
-                                    "value": " "
-                                },
-                                {
-                                    "type": "word",
-                                    "sourceIndex": 66,
-                                    "sourceEndIndex": 67,
-                                    "value": "+"
-                                },
-                                {
-                                    "type": "space",
-                                    "sourceIndex": 67,
-                                    "sourceEndIndex": 68,
-                                    "value": " "
-                                },
-                                {
-                                    "type": "function",
-                                    "sourceIndex": 68,
-                                    "value": "",
-                                    "before": " ",
-                                    "after": "",
-                                    "sourceEndIndex": 78,
-                                    "nodes": [
-                                        {
-                                            "type": "word",
-                                            "sourceIndex": 70,
-                                            "sourceEndIndex": 72,
-                                            "value": "$x"
-                                        },
-                                        {
-                                            "type": "space",
-                                            "sourceIndex": 72,
-                                            "sourceEndIndex": 73,
-                                            "value": " "
-                                        },
-                                        {
-                                            "type": "word",
-                                            "sourceIndex": 73,
-                                            "sourceEndIndex": 74,
-                                            "value": "+"
-                                        },
-                                        {
-                                            "type": "space",
-                                            "sourceIndex": 74,
-                                            "sourceEndIndex": 75,
-                                            "value": " "
-                                        },
-                                        {
-                                            "type": "word",
-                                            "sourceIndex": 75,
-                                            "sourceEndIndex": 77,
-                                            "value": "$y"
-                                        }
-                                    ]
-                                },
-                                {
-                                    "type": "space",
-                                    "sourceIndex": 78,
-                                    "sourceEndIndex": 79,
-                                    "value": " "
-                                },
-                                {
-                                    "type": "word",
-                                    "sourceIndex": 79,
-                                    "sourceEndIndex": 80,
-                                    "value": "-"
-                                },
-                                {
-                                    "type": "space",
-                                    "sourceIndex": 80,
-                                    "sourceEndIndex": 81,
-                                    "value": " "
-                                },
-                                {
-                                    "type": "word",
-                                    "sourceIndex": 81,
-                                    "sourceEndIndex": 83,
-                                    "value": "$c"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "type": "space",
-                    "sourceIndex": 85,
-                    "sourceEndIndex": 86,
-                    "value": " "
-                },
-                {
-                    "type": "word",
-                    "sourceIndex": 86,
-                    "sourceEndIndex": 88,
-                    "value": "$z"
-                },
-                {
-                    "type": "div",
-                    "sourceIndex": 88,
-                    "sourceEndIndex": 89,
-                    "value": ",",
-                    "before": "",
-                    "after": ""
-                },
-                {
-                    "type": "word",
-                    "sourceIndex": 89,
-                    "sourceEndIndex": 90,
-                    "value": "1"
-                },
-                {
-                    "type": "div",
-                    "sourceIndex": 90,
-                    "sourceEndIndex": 91,
-                    "value": ",",
-                    "before": "",
-                    "after": ""
-                },
-                {
-                    "type": "function",
-                    "sourceIndex": 91,
-                    "value": "calc",
-                    "before": " ",
-                    "after": " ",
-                    "sourceEndIndex": 105,
-                    "nodes": [
-                        {
-                            "type": "word",
-                            "sourceIndex": 97,
-                            "sourceEndIndex": 98,
-                            "value": "1"
-                        },
-                        {
-                            "type": "space",
-                            "sourceIndex": 98,
-                            "sourceEndIndex": 99,
-                            "value": " "
-                        },
-                        {
-                            "type": "word",
-                            "sourceIndex": 99,
-                            "sourceEndIndex": 100,
-                            "value": "+"
-                        },
-                        {
-                            "type": "space",
-                            "sourceIndex": 100,
-                            "sourceEndIndex": 101,
-                            "value": " "
-                        },
-                        {
-                            "type": "word",
-                            "sourceIndex": 101,
-                            "sourceEndIndex": 103,
-                            "value": "$z"
-                        }
-                    ]
-                },
-                {
-                    "type": "div",
-                    "sourceIndex": 105,
-                    "sourceEndIndex": 106,
-                    "value": ",",
-                    "before": "",
-                    "after": ""
-                },
-                {
-                    "type": "word",
-                    "sourceIndex": 106,
-                    "sourceEndIndex": 107,
-                    "value": "1"
-                }
-            ]
+            "type": "word",
+            "sourceIndex": 18,
+            "sourceEndIndex": 21,
+            "value": "red"
         }
     ]
 }
 -----
-$semi-margin-primary:var(--semi-margin-primary_cssvar);
-$semi-margin-sec:var(--semi-margin-sec_cssvar);
-
-.test{
-  --semi-margin-primary_cssvar:5px;
-  --semi-margin-sec_cssvar:15px;
-  .sss{
-    margin: xxxxx rgba(1,1,1,1) xxx cubic-bezier(calc($a - ( $b + ( $x + $y ) + ( $x + $y) - $c)) $z,1,calc( 1 + $z ),1);
-  }
-}
+//$semi-margin-primary:var(--semi-margin-primary_cssvar);
+//$semi-margin-sec:var(--semi-margin-sec_cssvar);
+//
+//.test{
+//  --semi-margin-primary_cssvar:5px;
+//  --semi-margin-sec_cssvar:15px;
+//  .sss{
+//    margin: xxxxx rgba(1,1,1,1) xxx cubic-bezier(calc($a - ( $b + ( $x + $y ) + ( $x + $y) - $c)) $z,1,calc( 1 + $z ),1);
+//  }
+//}
 
 //
 //
@@ -476,6 +100,11 @@ $semi-margin-sec:var(--semi-margin-sec_cssvar);
 //xxxxx xxx  (1 + $a - (1 + $c))
 //
 
+
+
+.body{
+  border: 1 - $a / $b solid red;
+}
 
 
 

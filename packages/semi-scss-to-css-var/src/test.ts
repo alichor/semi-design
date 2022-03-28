@@ -5,9 +5,9 @@
         let left = 0;
         let right = 0;
 
-        const detectSpace = (autoJump: boolean = false):[boolean, number] => {
-            if (!str[right]){
-                return [false,0];
+        const detectSpace = (autoJump: boolean = false): [boolean, number] => {
+            if (!str[right]) {
+                return [false, 0];
             }
             let flag = false;
             let jumpCount = 0;
@@ -26,11 +26,11 @@
             return [flag, jumpCount];
         };
 
-        const detectScssVar = (autoJump: boolean = false, variables: 'left' | 'right' = 'right'):[boolean, number]  => {
+        const detectScssVar = (autoJump: boolean = false, variables: 'left' | 'right' = 'right'): [boolean, number] => {
             let jumpCount = 0;
             const startIndex = variables === 'left' ? left : right;
-            if (!str[startIndex]){
-                return [false,0];
+            if (!str[startIndex]) {
+                return [false, 0];
             }
             if (str[startIndex] !== '$') {
                 return [false, jumpCount];
@@ -55,18 +55,19 @@
             return [true, jumpCount];
         };
 
-        const detectConst = (autoJump: boolean = false):[boolean, number]  => {
-            if (!str[right]){
-                return [false,0];
+        const detectConst = (autoJump: boolean = false, variable: 'left' | 'right' = 'right'): [boolean, number] => {
+            const startIndex = variable === 'left' ? left : right;
+            if (!str[startIndex]) {
+                return [false, 0];
             }
             let jumpCount = 0;
-            if (!/\w|\d/.test(str[right])) {
+            if (!/\w|\d/.test(str[startIndex])) {
                 return [false, 0];
             } else {
                 jumpCount++;
             }
             while (true) {
-                const char = str[right + jumpCount];
+                const char = str[startIndex + jumpCount];
                 if (/\w|\d/.test(char)) {
                     jumpCount++;
                 } else {
@@ -74,19 +75,67 @@
                 }
             }
             if (autoJump) {
-                right += jumpCount;
+                if (variable === 'left') {
+                    left += jumpCount;
+                } else {
+                    right += jumpCount;
+                }
+
+
             }
             return [true, jumpCount];
         };
 
-        const detectOperator = (autoJump: boolean = false):[boolean, number]  => {
-            if (!str[right]){
-                return [false,0];
+        const detectConstReverse = (autoJump: boolean = false, variable: 'left' | 'right' = 'right'): [boolean, number] => {
+            const startIndex = variable === 'left' ? left : right;
+            if (!str[startIndex]) {
+                return [false, 0];
             }
-            const char = str[right];
+            let jumpCount = 0;
+            if (!/\w|\d/.test(str[startIndex])) {
+                return [false, 0];
+            } else {
+                jumpCount++;
+            }
+            while (true) {
+                const char = str[startIndex - jumpCount];
+                if (char) {
+                    if (/\w|\d/.test(char)) {
+                        jumpCount++;
+                    } else {
+                        break;
+                    }
+                } else {
+                    jumpCount--;
+                    break;
+                }
+
+            }
+            if (autoJump) {
+                if (variable === 'left') {
+                    left -= jumpCount;
+                } else {
+                    right -= jumpCount;
+                }
+
+
+            }
+            return [true, jumpCount];
+        };
+
+        const detectOperator = (autoJump: boolean = false, variable: 'left' | 'right' = 'right'): [boolean, number] => {
+            const startIndex = variable === 'left' ? left : right;
+            if (!str[startIndex]) {
+                return [false, 0];
+            }
+            const char = str[startIndex];
             if (/\+|\-|\*|\//.test(char)) {
                 if (autoJump) {
-                    right += 1;
+                    if (variable === 'left') {
+                        left += 1;
+                    } else {
+                        right += 1;
+                    }
                 }
                 return [true, 1];
             } else {
@@ -94,9 +143,9 @@
             }
         };
 
-        const detectBucket = (autoJump: boolean = false):[boolean, number]  => {
-            if (!str[right]){
-                return [false,0];
+        const detectBucket = (autoJump: boolean = false): [boolean, number] => {
+            if (!str[right]) {
+                return [false, 0];
             }
             if (str[right] !== '(') {
                 return [false, 0];
@@ -129,8 +178,24 @@
                 //is scss variable start
                 const [scssVarFlag, scssVarCount] = detectScssVar(false, 'left');
                 if (!scssVarFlag) {
-                    left++;
-                    continue;
+                    //handle  1px + $a case
+                    const [operatorFlag,] = detectOperator(false, 'left');
+                    if (operatorFlag) {
+                        //find const in reverse direction
+                        const operatorIndex=left;
+                        left--;
+                        //todo space reverse
+                        const [constFlag, constCount] = detectConstReverse(false, 'left');
+                        //set  right to const
+                        right = operatorIndex + 1;
+                        left=left - constCount +1;
+                        isInCalc = true;
+                        continue;
+                    } else {
+
+                        left++;
+                        continue;
+                    }
                 }
                 right = left + scssVarCount;
                 detectSpace(true);
@@ -156,7 +221,7 @@
                     left = right;
                 }
             } else {
-                throw new Error(`Error: while replace scss calc to css calc, target value:  "${str}" , left:${left}, right:${right}, target value near error is "${str.slice(left,right+1)}"`,);
+                throw new Error(`Error: while replace scss calc to css calc, target value:  "${str}" , left:${left}, right:${right}, target value near error is "${str.slice(left, right + 1)}"`,);
             }
 
         }
