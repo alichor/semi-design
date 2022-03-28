@@ -53,7 +53,7 @@ const valueParser = (str:string)=>{
                     //find Start
                     let j = i - 1;
                     let currentStrIsInfluenced = true;
-                    let currentStrIsInBucket = splitWithSpace[i].includes(')');
+                    let currentStrIsInBucket = splitWithSpace[i].includes(')') || splitWithSpace[j]?.includes(')');
                     while (j >= 0) {
                         const str = splitWithSpace[j];
                         if (str.includes('(')) {
