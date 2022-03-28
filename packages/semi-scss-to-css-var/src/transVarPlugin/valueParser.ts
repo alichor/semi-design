@@ -1,6 +1,94 @@
 import {trimEnd, trimStart} from "lodash";
 
-const valueParser = () => {
+const valueParser = (str:string)=>{
+    const splitToGroup=(()=>{
+//
+//
+//xxxxx xxx $a + $b
+//
+//xxxxx xxx $a + 1 + $b
+//
+//xxxxx  xxx  $a + $b + 1 xxxxx  $c + $6
+//  xxxx xxx  calc($a + $b + 1 xxxxx  $c + $6)
+//
+//xxxxx xxx $a - ($b + ($x + $y)+ $c)
+//
+//xxxxx xxx  (1 + $a - (1 + $c))
+//
+        const splitWithSpace = str.split('\s');
+
+        const isStrInfluenceLeft = (str: string) => {
+            if (str{
+                const trimmed = str.trim();
+                return ['+', '-', '*', '/', ')'].includes(trimmed[0]);
+            }
+            return false;
+
+        }
+
+        const isStrInfluenceRight = (str: string) => {
+            if (str) {
+                const trimmed = str.trim();
+                return ['+', '-', '*', '/', '('].includes(trimmed[trimmed.length - 1]);
+            }
+            return false;
+        }
+
+        let groupIndex:{start:number,end:number}[]=[];
+        let i =0;
+        let start: number | null = null
+        let end: number | null = null;
+        while (i < splitWithSpace.length) {
+            const str = splitWithSpace[i];
+            let calcStartFlag=false;
+            let calcEndFlag = false;
+
+            if (isStrInfluenceLeft(str)) {
+                calcEndFlag = true;
+            }
+
+
+            if (calcEndFlag) {
+                (() => {
+                    //find Start
+                    let j = i - 1;
+                    let currentStrIsInfluenced = true;
+                    let currentStrIsInBucket = splitWithSpace[i].includes(')');
+                    while (j >= 0) {
+                        const str = splitWithSpace[j];
+                        if (str.includes('(')) {
+                            currentStrIsInBucket = false;
+                        }
+                        if (isStrInfluenceRight(str)) {
+
+                        } else if (isStrInfluenceLeft(str)) {
+                            currentStrIsInfluenced = true;
+                        } else {
+
+                        }
+                        j--;
+
+
+                    }
+                })()
+            }
+            if(calcStartFlag){
+            }
+
+            if(!calcStartFlag && !calcEndFlag){
+                i++;
+            }
+        }
+
+
+
+        return str;
+
+    })()
+}
+
+
+const oldValueParser = () => {
     const mergeArrayItem = (array: string[], start: number, end: number) => {
         let newArray = [];
         newArray.push(...array.slice(0, start));
@@ -14,6 +102,7 @@ const valueParser = () => {
     }
 
     const replaceWithCalc = (str: string): string => {
+
 
         const codeGroup = []
         const format = (str: string) => {
