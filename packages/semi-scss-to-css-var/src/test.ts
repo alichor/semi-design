@@ -1,18 +1,21 @@
 (() => {
-    const str = `xxxxx rgba(1,1,1,1) xxx cubic-bezier(calc($a - ( $b + ( $c + $d ) + ( $e + $f) - $g)) $h,1, 1 + $i ,1)`;
+     const str = `xxxxx rgba(1,1,1,1) xxx cubic-bezier(calc($a - ( $b + ( $c + $d ) + ( $e + $f) - $g)) $h,1, 1 + $i ,1)`;
+    // const str = `1+   $a +2 $a+$b  `;
+
     const func = (str: string) => {
         const injectCalcIndex: { start: number, end: number }[] = [];
         let left = 0;
         let right = 0;
 
-        const detectSpace = (autoJump: boolean = false): [boolean, number] => {
-            if (!str[right]) {
+        const detectSpace = (autoJump: boolean = false,variable:'left'|'right'='right'): [boolean, number] => {
+            const startIndex = variable==='left'?left:right;
+            if (!str[startIndex]) {
                 return [false, 0];
             }
             let flag = false;
             let jumpCount = 0;
             while (true) {
-                const char = str[right + jumpCount];
+                const char = str[startIndex + jumpCount];
                 if (/\s/.test(char)) {
                     jumpCount++;
                     flag = true;
@@ -21,10 +24,43 @@
                 }
             }
             if (autoJump) {
-                right += jumpCount;
+                if(variable==='left'){
+                    left += jumpCount;
+                }else{
+                    right += jumpCount;
+                }
+
             }
             return [flag, jumpCount];
         };
+
+        const detectSpaceReverse = (autoJump: boolean = false,variable:'left'|'right'='right'): [boolean, number] => {
+            const startIndex = variable==='left'?left:right;
+            if (!str[startIndex]) {
+                return [false, 0];
+            }
+            let flag = false;
+            let jumpCount = 0;
+            while (true) {
+                const char = str[startIndex - jumpCount];
+                if (/\s/.test(char)) {
+                    jumpCount++;
+                    flag = true;
+                } else {
+                    break;
+                }
+            }
+            if (autoJump) {
+                if(variable==='left'){
+                    left = left - jumpCount;
+                }else{
+                    right = right - jumpCount;
+                }
+
+            }
+            return [flag, jumpCount];
+        };
+
 
         const detectScssVar = (autoJump: boolean = false, variables: 'left' | 'right' = 'right'): [boolean, number] => {
             let jumpCount = 0;
@@ -106,7 +142,6 @@
                         break;
                     }
                 } else {
-                    jumpCount--;
                     break;
                 }
 
@@ -184,7 +219,7 @@
                         //find const in reverse direction
                         const operatorIndex=left;
                         left--;
-                        //todo space reverse
+                        detectSpaceReverse(true,'left');
                         const [constFlag, constCount] = detectConstReverse(false, 'left');
                         //set  right to const
                         right = operatorIndex + 1;
@@ -212,6 +247,7 @@
             const [constFlag,] = detectConst(true);
             const [scssVarFlag,] = detectScssVar(true);
             if (bucketFlag || constFlag || scssVarFlag) {
+                detectSpace(true);
                 const [operatorFlag,] = detectOperator(true);
                 if (operatorFlag) {
                     isInCalc = true;
