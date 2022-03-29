@@ -1,5 +1,5 @@
 (() => {
-     const str = `xxxxx rgba(1,1,1,1) xxx cubic-bezier(calc($a - ( $b + ( $c + $d ) + ( $e + $f) - $g)) $h,1, 1 + $i ,1)`;
+     const str = `xxxxx rgba(1,1,1,1) xxx cubicbezier(calc($a - ( $b + ( $c + $d ) + ( $e + $f) - $g)) $h,1, 1 + $i ,1)`;
     // const str = `1+   $a +2 $a+$b  `;
 
     const func = (str: string) => {
@@ -241,7 +241,8 @@
                     continue;
                 }
             }
-            // str[right] is an operator
+            // here,  str[right] is an operator
+
             detectSpace(true);
             const [bucketFlag,] = detectBucket(true);
             const [constFlag,] = detectConst(true);
