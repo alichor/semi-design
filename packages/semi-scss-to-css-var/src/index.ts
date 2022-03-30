@@ -57,9 +57,14 @@ const getAllScssFilesInPath = (filePath: string) => {
 const transScssToCSSVar=(scssFilePathList:string[])=>{
 
     for (const scssFilePath of scssFilePathList){
-        const raw=fs.readFileSync(scssFilePath,{ encoding:'utf-8' });
-        const result=postcss([transVarPlugin()]).process(raw, { syntax: postcssScss });
-        fs.writeFileSync(scssFilePath,result.css,"utf8");
+        try {
+            const raw=fs.readFileSync(scssFilePath,{ encoding:'utf-8' });
+            const result=postcss([transVarPlugin()]).process(raw, { syntax: postcssScss });
+            fs.writeFileSync(scssFilePath,result.css,"utf8");
+        } catch (e){
+            console.error(e);
+            console.error(`Error While processing ${scssFilePath}`);
+        }
 
     }
 
