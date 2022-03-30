@@ -54,11 +54,14 @@ const getAllScssFilesInPath = (filePath: string) => {
 // }
 
 
-const transScssToCSSVar=(scssFilePath:string)=>{
+const transScssToCSSVar=(scssFilePathList:string[])=>{
 
-    const raw=fs.readFileSync(scssFilePath,{ encoding:'utf-8' });
-    const result=postcss([transVarPlugin()]).process(raw, { syntax: postcssScss });
-    fs.writeFileSync(scssFilePath,result.css,"utf8");
+    for (const scssFilePath of scssFilePathList){
+        const raw=fs.readFileSync(scssFilePath,{ encoding:'utf-8' });
+        const result=postcss([transVarPlugin()]).process(raw, { syntax: postcssScss });
+        fs.writeFileSync(scssFilePath,result.css,"utf8");
+
+    }
 
 };
 
@@ -67,7 +70,7 @@ const transScssVariables2CssVariables = ({ sourcePath, resultPath }: Options) =>
 
     const transDir = sourcePath;
     const scssFileList = getAllScssFilesInPath(transDir);
-    transScssToCSSVar(scssFileList[0]);
+    transScssToCSSVar(scssFileList);
     return scssFileList;
 };
 
